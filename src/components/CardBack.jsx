@@ -2,10 +2,11 @@ import React from 'react';
 
 // Card back from the printed design: light blue, circular
 // "OPEN DATA SUPERTRUMPF" text around a red map pin.
+// Fills its container so it can mirror the face-up card's exact size.
 export default function CardBack() {
   return (
     <div
-      className="flex h-[470px] w-[340px] flex-col items-center justify-center overflow-hidden"
+      className="flex h-full w-full flex-col items-center justify-center overflow-hidden"
       style={{
         borderRadius: "1.1rem",
         backgroundColor: "#ACD7EF",

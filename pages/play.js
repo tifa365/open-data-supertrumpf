@@ -177,7 +177,19 @@ export default function Play() {
                         highlightKey={selectedKey}
                       />
                     ) : (
-                      <CardBack />
+                      /* Invisible copy of the player's card sizes the back
+                         to exactly match the face-up card */
+                      <div className="relative">
+                        <div className="invisible" aria-hidden="true">
+                          <SupertrumpfCard
+                            data={playerCard}
+                            mapPath={playerCard && getMapPath(playerCard.Ortsteil)}
+                          />
+                        </div>
+                        <div className="absolute inset-0">
+                          <CardBack />
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
