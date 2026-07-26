@@ -1,0 +1,93 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin } from "lucide-react";
+
+/**
+ * SupertrumpfCard (v7)
+ * ────────────────────
+ * • Removed blue background card.
+ * • Added a deeper, soft drop‑shadow to the main card to create depth.
+ */
+export default function SupertrumpfCard() {
+  const blue = "#002F6C";
+  const yellow = "#F4E85A";
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-10">
+      <Card
+        className="w-[28rem] overflow-hidden rounded-[1.75rem]"
+        style={{
+          // custom shadow for more realistic depth
+          boxShadow: "0 25px 45px rgba(0,0,0,0.25)",
+        }}
+      >
+        <CardContent className="p-8">
+          {/* Badge */}
+          <div className="relative inline-block">
+            <span
+              className="absolute inset-0 translate-x-[4px] translate-y-[4px] rounded"
+              style={{ backgroundColor: yellow }}
+            />
+            <span
+              className="relative inline-block rounded border-[3px] px-5 py-[4px] text-base font-semibold tracking-wide"
+              style={{ borderColor: blue, color: blue }}
+            >
+              Friedrichshain‑Kreuzberg
+            </span>
+          </div>
+
+          {/* Map placeholder */}
+          <div className="mt-7 flex h-52 w-full items-center justify-center rounded-md bg-gray-200 text-base text-gray-500">
+            Map
+          </div>
+
+          {/* Thick divider */}
+          <hr className="my-6 border-2" style={{ borderColor: blue }} />
+
+          {/* Sub‑district title */}
+          <h2 className="text-center text-2xl font-bold" style={{ color: blue }}>
+            Kreuzberg Nord
+          </h2>
+
+          {/* Thick divider */}
+          <hr className="my-6 border-2" style={{ borderColor: blue }} />
+
+          {/* Data rows with per‑row dividers */}
+          <div className="text-base" style={{ color: blue }}>
+            {[
+              ["Fläche", "2,94 km²"],
+              ["Einwohner:innen", "41 369"],
+              ["Straßen mit Frauennamen", "12 %"],
+              ["Solarpotential", "57 GWh/a"],
+              ["Luftqualität (NO₂)", "17,69 µg/m³"],
+              ["Versiegelung", "67 %"],
+              ["Schnellimbiss‑Anzahl", "89"],
+              ["Rettungsdienst‑Anfahrt", "9 Min 19 Sek"],
+            ].map(([label, value], i, arr) => (
+              <CardRow
+                key={label}
+                label={label}
+                value={value}
+                accent={blue}
+                isLast={i === arr.length - 1}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function CardRow({ label, value, accent, isLast }) {
+  return (
+    <div
+      className="flex justify-between py-[4px]"
+      style={{ borderBottom: isLast ? "none" : `2px solid ${accent}` }}
+    >
+      <span className="font-normal">{label}</span>
+      <span className="font-bold" style={{ color: accent }}>
+        {value}
+      </span>
+    </div>
+  );
+}

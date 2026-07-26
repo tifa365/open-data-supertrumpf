@@ -11,7 +11,9 @@ The **Open Data Supertrumpf** card game transforms the diverse data of our capit
 Each card represents one of the 58 admin areas, and open datasets allow for comparisons across different categories.
 For example, the **'airquality'** category lets players explore where they can breathe fresh air in Berlin, the comparison in the **'number of fast food stalls** lets you know where the most döner and currywurst options are likely found, and the category **'female street names'** highlights the presence and recognition of significant women in Berlin, or the lack thereof. 
 
-The card game is fully based on **Open Data**. This repository contains all the python scripts for processing the data so that we could use them for the game. Go to [scripts](cardgame/scripts) to learn about the data processing for the **6 categories**, as well as information on the population and admin areas featured on each card:
+The card game is fully based on **Open Data**. This repository contains the runnable Next.js app as well as the data pipeline behind it: the raw datasets, processing notebooks, and map exports live in the `cardgame/` folder.
+
+That folder contains the source material for the analyses behind the **6 categories**, as well as information on the population and admin areas featured on each card:
  - admin areas
  - Population
  - female street names
@@ -21,11 +23,25 @@ The card game is fully based on **Open Data**. This repository contains all the 
  - fast food stalls
  - response time fire brigade
 
-Find the script _createMaps.ipynb_ in [maps](cardgame/maps) to see how we created the maps for each admin area using the datawrapper API. 
+The original notebooks are in `cardgame/scripts/` and the map exports in `cardgame/maps/`.
+
+## Repository Layout
+
+- `pages/`, `src/`, `public/`: the Next.js app (runtime data in `public/data/`, map assets in `public/maps/`)
+- `cardgame/`: raw data, notebooks, GeoJSON, PNG/SVG exports, and design/source assets
 
 For more information about the game visit our [Website](https://www.odis-berlin.de/projekte/supertrumpf).
 
-![image of the card game](/cardgame/ODIS-Supertrumpf-MockUp-02-20241115.png)
+![image of the card game](public/preview/ODIS-Supertrumpf-MockUp-02-20241115.png)
+
+## Running the App
+
+```bash
+npm install
+npm run dev
+```
+
+Then open http://localhost:3000. Build a production version with `npm run build && npm run start`.
 
 ## Prerequisites
 
@@ -129,4 +145,3 @@ Texts and content available as [CC BY](https://creativecommons.org/licenses/by/3
     </td>
   </tr>
 </table>
-

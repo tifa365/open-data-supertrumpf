@@ -4,5 +4,14 @@
     "activityBar.foreground": "#e7e7e7",
     "activityBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#c24579"
+  "peacock.color": "#c24579",
+  "files.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/docs/generated": true
+  },
+  "search.exclude": {
+    "**/.next": true,
+    "**/node_modules": true
+  }
 }
