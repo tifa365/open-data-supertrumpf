@@ -43,6 +43,10 @@ npm run dev
 
 Then open http://localhost:3000. Build a production version with `npm run build && npm run start`.
 
+Besides browsing the cards, you can play the actual game against the computer at `/play`:
+the deck is split, each round one side picks a category, the better value wins both cards.
+For air quality (NO₂), soil sealing, and ambulance response time the lower value wins.
+
 ## Prerequisites
 
 Ensure that the following prerequisites are met to run the scripts in this repository:

@@ -24,8 +24,14 @@ export async function loadCardData() {
   }
 }
 
-// Convert area name to SVG filename format
+// Convert area name to SVG filename format (Berlin locator map)
 export function getMapPath(ortsteil) {
   const filename = ortsteil.replace(/[ /]/g, "_");
   return `/maps/${filename}.svg`;
+}
+
+// Card artwork: the district on its street map (original print design)
+export function getArtworkPath(ortsteil) {
+  const filename = ortsteil.replace(/[ /]/g, "_");
+  return `/maps/art/${filename}.webp`;
 }
