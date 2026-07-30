@@ -55,7 +55,16 @@ export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highl
 
       <div className="px-5 pb-4" style={{ color: blue }}>
         <div className="border-y-2" style={{ borderColor: blue }}>
-          <h2 className="py-1.5 text-center text-xl font-extrabold tracking-tight">
+          {/* Single line at fixed line-height, so long names shrink
+              instead of wrapping and changing the card height */}
+          <h2
+            className="overflow-hidden whitespace-nowrap py-1.5 text-center font-extrabold tracking-tight"
+            style={{
+              lineHeight: "28px",
+              fontSize:
+                data.Ortsteil.length > 28 ? "15px" : data.Ortsteil.length > 22 ? "17px" : "20px",
+            }}
+          >
             {data.Ortsteil}
           </h2>
         </div>
