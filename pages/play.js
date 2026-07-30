@@ -100,12 +100,12 @@ export default function Play() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
-      <div className="container mx-auto px-4 py-6">
-        <header className="mb-5 text-center">
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">
-            Open Data Supertrumpf
-          </h1>
-        </header>
+      <header className="px-6 pt-5">
+        <h1 className="text-xl font-extrabold tracking-tight text-white">
+          Open Data Supertrumpf
+        </h1>
+      </header>
+      <div className="container mx-auto px-4 pb-6 pt-2">
 
         {phase === 'loading' && (
           <p className="py-20 text-center text-blue-100">Karten werden gemischt …</p>
@@ -131,7 +131,10 @@ export default function Play() {
               </div>
             ) : (
               <>
-                <div className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start">
+                <div
+                  className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start"
+                  style={{ zoom: 1.22 }}
+                >
                   <div className="text-center">
                     <p className="mb-2 text-sm font-bold text-white">Deine Karte</p>
                     <SupertrumpfCard
