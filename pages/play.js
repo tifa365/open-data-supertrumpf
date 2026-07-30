@@ -144,6 +144,9 @@ export default function Play() {
                         phase === 'pick' && turn === 'player' ? playRound : undefined
                       }
                       highlightKey={selectedKey}
+                      highlightTone={
+                        roundWinner === 'player' ? 'win' : roundWinner === 'ai' ? 'lose' : undefined
+                      }
                     />
                   </div>
 
@@ -158,6 +161,9 @@ export default function Play() {
                         data={aiCard}
                         mapPath={aiCard && getMapPath(aiCard.Ortsteil)}
                         highlightKey={selectedKey}
+                        highlightTone={
+                          roundWinner === 'ai' ? 'win' : roundWinner === 'player' ? 'lose' : undefined
+                        }
                       />
                     ) : (
                       /* Invisible copy of the player's card sizes the back

@@ -6,17 +6,23 @@ import { getArtworkPath } from '@/lib/dataLoader';
 const blue = "#002F6C";
 const yellow = "#F4E85A";
 
+// Row highlight backgrounds: yellow while picking / on a tie,
+// green on the round winner's card, red on the loser's.
+const HIGHLIGHT_COLORS = { win: '#B9E7AF', lose: '#F5B8B8' };
+
 // Canonical card, modeled on the printed Supertrumpf design:
 // street-map artwork on top, Bezirk badge with yellow drop, Ortsteil
 // title between rules, Fläche/Einwohner next to the Berlin locator,
 // then the remaining categories as ruled rows.
-// Pass onSelectCategory/highlightKey to make the rows playable.
-export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highlightKey }) {
+// Pass onSelectCategory/highlightKey to make the rows playable;
+// highlightTone ('win' | 'lose') colors the highlighted row.
+export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highlightKey, highlightTone }) {
   if (!data) {
     return <div>Loading...</div>;
   }
 
   const interactive = typeof onSelectCategory === 'function';
+  const highlightColor = HIGHLIGHT_COLORS[highlightTone] ?? yellow;
   const [flaeche, einwohner, ...rest] = CATEGORIES;
 
   return (
@@ -62,9 +68,11 @@ export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highl
           <div className="min-w-0 flex-1">
             <StatLine cat={flaeche} data={data} interactive={interactive}
               highlighted={highlightKey === flaeche.key}
+              highlightColor={highlightColor}
               onSelect={() => onSelectCategory?.(flaeche.key)} />
             <StatLine cat={einwohner} data={data} interactive={interactive}
               highlighted={highlightKey === einwohner.key}
+              highlightColor={highlightColor}
               onSelect={() => onSelectCategory?.(einwohner.key)} />
           </div>
           {mapPath ? (
@@ -85,6 +93,7 @@ export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highl
             data={data}
             interactive={interactive}
             highlighted={highlightKey === cat.key}
+            highlightColor={highlightColor}
             onSelect={() => onSelectCategory?.(cat.key)}
             isLast={i === rest.length - 1}
           />
@@ -94,14 +103,14 @@ export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highl
   );
 }
 
-function StatLine({ cat, data, interactive, highlighted, onSelect }) {
+function StatLine({ cat, data, interactive, highlighted, highlightColor, onSelect }) {
   const content = (
     <>
       <span className="font-normal">{cat.label}&nbsp;&nbsp;</span>
       <span className="font-bold">{cat.format(data)}</span>
     </>
   );
-  const style = { backgroundColor: highlighted ? yellow : undefined };
+  const style = { backgroundColor: highlighted ? highlightColor : undefined };
   if (!interactive) {
     return <div className="text-[13px] leading-6" style={style}>{content}</div>;
   }
@@ -117,9 +126,9 @@ function StatLine({ cat, data, interactive, highlighted, onSelect }) {
   );
 }
 
-function StatRow({ cat, data, interactive, highlighted, onSelect, isLast }) {
+function StatRow({ cat, data, interactive, highlighted, highlightColor, onSelect, isLast }) {
   const className = `flex w-full items-baseline justify-between py-[5px] text-[13px] ${isLast ? '' : 'border-b'}`;
-  const style = { borderColor: blue, backgroundColor: highlighted ? yellow : undefined };
+  const style = { borderColor: blue, backgroundColor: highlighted ? highlightColor : undefined };
   const content = (
     <>
       <span className="font-normal">{cat.label}</span>
