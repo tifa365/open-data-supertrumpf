@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import SupertrumpfCard from '@/components/SupertrumpfCard';
-import { loadCardData, getMapPath } from '@/lib/dataLoader';
+import { loadCardData, getMapPath, getArtworkPath } from '@/lib/dataLoader';
+
+const TURN_MS = 200;
 
 export default function Home() {
   const [cardData, setCardData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [turning, setTurning] = useState(null); // null | 'next' | 'prev'
 
   useEffect(() => {
     loadCardData().then(data => {
@@ -15,12 +18,32 @@ export default function Home() {
 
   const currentCard = cardData[currentIndex];
 
+  // Preload neighbor artwork so the card isn't blank mid-turn
+  useEffect(() => {
+    if (cardData.length === 0) return;
+    const n = cardData.length;
+    [cardData[(currentIndex + 1) % n], cardData[(currentIndex - 1 + n) % n]].forEach((c) => {
+      const img = new Image();
+      img.src = getArtworkPath(c.Ortsteil);
+    });
+  }, [currentIndex, cardData]);
+
+  // Turn the card edge-on, swap the content, then turn it back
+  const turnTo = (direction, nextIndex) => {
+    if (turning) return;
+    setTurning(direction);
+    setTimeout(() => {
+      setCurrentIndex(nextIndex);
+      setTurning(null);
+    }, TURN_MS);
+  };
+
   const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : cardData.length - 1));
+    turnTo('prev', currentIndex > 0 ? currentIndex - 1 : cardData.length - 1);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev < cardData.length - 1 ? prev + 1 : 0));
+    turnTo('next', currentIndex < cardData.length - 1 ? currentIndex + 1 : 0);
   };
 
   return (
@@ -52,11 +75,17 @@ export default function Home() {
         
         {currentCard && (
           <>
-            <div className="flex justify-center mb-6">
-              <SupertrumpfCard 
-                data={currentCard} 
-                mapPath={getMapPath(currentCard.Ortsteil)}
-              />
+            <div className="flex justify-center mb-6" style={{ perspective: '1200px' }}>
+              <div
+                className={`card-turn ${
+                  turning === 'next' ? 'is-turning-next' : turning === 'prev' ? 'is-turning-prev' : ''
+                }`}
+              >
+                <SupertrumpfCard
+                  data={currentCard}
+                  mapPath={getMapPath(currentCard.Ortsteil)}
+                />
+              </div>
             </div>
             
             <div className="flex justify-center gap-4">
