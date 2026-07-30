@@ -109,7 +109,7 @@ function StatLine({ cat, data, interactive, highlighted, onSelect }) {
     <button
       type="button"
       onClick={onSelect}
-      className="-mx-1 block w-full px-1 text-left text-[13px] leading-6 hover:bg-[#FBF6C9]"
+      className="-mx-1 block w-full cursor-pointer px-1 text-left text-[13px] leading-6 hover:bg-[#FBF6C9]"
       style={style}
     >
       {content}
