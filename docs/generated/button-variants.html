@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Button-Varianten – ODIS Supertrumpf</title>
+<style>
+  :root {
+    --blue: #002F6C;
+    --blue-hover: #16408F;
+    --yellow: #F4E85A;
+    --yellow-soft: #FBF6C9;
+    --lightblue: #ACD7EF;
+    --paper: #F1F3F6;
+    --red: #D8232A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--paper);
+    color: var(--blue);
+    padding: 40px 20px 80px;
+  }
+  .page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .page-sub {
+    text-align: center;
+    font-size: 14px;
+    color: #4a5a75;
+    margin-bottom: 40px;
+  }
+  .variant {
+    max-width: 760px;
+    margin: 0 auto 36px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0, 18, 54, 0.10);
+    overflow: hidden;
+  }
+  .variant-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 14px 22px;
+    border-bottom: 1px solid #e3e8ef;
+  }
+  .variant-head .num {
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+    background: var(--blue);
+    padding: 2px 8px;
+  }
+  .variant-head h2 { font-size: 16px; font-weight: 700; }
+  .variant-head p { font-size: 13px; color: #4a5a75; }
+  .stage {
+    padding: 44px 20px 48px;
+    background: var(--paper);
+    text-align: center;
+  }
+  .stage .h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  /* ---------- Variante 1: Stempel & Schatten ---------- */
+  .v1-primary {
+    display: inline-block;
+    position: relative;
+    background: var(--yellow);
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    font-weight: 800;
+    font-size: 15px;
+    padding: 13px 34px;
+    text-decoration: none;
+    box-shadow: 5px 5px 0 var(--blue);
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+  .v1-primary:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--blue); }
+  .v1-primary:active { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--blue); }
+  .v1-row { margin-top: 18px; display: flex; gap: 14px; justify-content: center; }
+  .v1-secondary {
+    display: inline-block;
+    background: white;
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 20px;
+    text-decoration: none;
+    box-shadow: 4px 4px 0 var(--yellow);
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+  .v1-secondary:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--yellow); }
+  .v1-secondary:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--yellow); }
+
+  /* ---------- Variante 2: Spieltisch-Pill ---------- */
+  .v2-group {
+    display: inline-flex;
+    border: 2px solid var(--blue);
+    border-radius: 999px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 14px rgba(0, 18, 54, 0.12);
+  }
+  .v2-group a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue);
+    text-decoration: none;
+    transition: background 120ms ease;
+  }
+  .v2-group a + a { border-left: 2px solid var(--blue); }
+  .v2-primary { background: var(--blue); color: var(--yellow) !important; }
+  .v2-primary:hover { background: var(--blue-hover); }
+  .v2-primary .pin { flex: none; }
+  .v2-group a:not(.v2-primary):hover { background: var(--yellow-soft); }
+
+  /* ---------- Variante 3: Textmarker ---------- */
+  .v3-primary {
+    position: relative;
+    display: inline-block;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--blue);
+    text-decoration: none;
+    padding: 2px 6px;
+    z-index: 0;
+    white-space: nowrap;
+  }
+  .v3-primary .marker {
+    position: absolute;
+    left: 0; right: 0; bottom: 2px;
+    height: 38%;
+    background: var(--yellow);
+    z-index: -1;
+    transform: skew(-8deg);
+    transition: height 160ms ease;
+  }
+  .v3-primary:hover .marker { height: 92%; }
+  .v3-primary .arrow { display: inline-block; transition: transform 160ms ease; margin-left: 6px; }
+  .v3-primary:hover .arrow { transform: translateX(5px); }
+  .v3-links { margin-top: 16px; display: flex; gap: 26px; justify-content: center; }
+  .v3-links a {
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    padding-bottom: 3px;
+  }
+  .v3-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--lightblue);
+    transition: background 140ms ease, height 140ms ease;
+  }
+  .v3-links a:hover::after { background: var(--yellow); height: 5px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v1-primary, .v1-secondary, .v2-group a,
+    .v3-primary .marker, .v3-primary .arrow, .v3-links a::after { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Button-Varianten</h1>
+<p class="page-sub">Drei Vorschläge für „Gegen den Computer spielen" + Ansichten-Links · Hover ausprobieren</p>
+
+<!-- ================= Variante 1 ================= -->
+<section class="variant">
+  <div class="variant-head">
+    <span class="num">1</span>
+    <h2>Stempel &amp; Schatten</h2>
+    <p>– die Sprache des Bezirk-Badges: harte Kanten, gelber/blauer Versatzschatten, drückt sich beim Klick „auf den Tisch“</p>
+  </div>
+  <div class="stage">
+    <div class="h1">ODIS Berlin Prognoseräume Supertrumpf</div>
+    <a class="v1-primary" href="#">Gegen den Computer spielen</a>
+    <div class="v1-row">
+      <a class="v1-secondary" href="#">Galerie-Ansicht</a>
+      <a class="v1-secondary" href="#">Solitaire-Ansicht</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= Variante 2 ================= -->
+<section class="variant">
+  <div class="variant-head">
+    <span class="num">2</span>
+    <h2>Spieltisch-Pill</h2>
+    <p>– alles in einer Leiste: das Spiel als gefülltes Segment mit Pin, die Ansichten daneben</p>
+  </div>
+  <div class="stage">
+    <div class="h1">ODIS Berlin Prognoseräume Supertrumpf</div>
+    <nav class="v2-group">
+      <a class="v2-primary" href="#">
+        <svg class="pin" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#D8232A"/>
+          <circle cx="12" cy="9" r="2.6" fill="white"/>
+        </svg>
+        Gegen den Computer spielen
+      </a>
+      <a href="#">Galerie</a>
+      <a href="#">Solitaire</a>
+    </nav>
+  </div>
+</section>
+
+<!-- ================= Variante 3 ================= -->
+<section class="variant">
+  <div class="variant-head">
+    <span class="num">3</span>
+    <h2>Textmarker</h2>
+    <p>– typografisch: der Spielaufruf als markierte Zeile, der Marker füllt sich beim Hover, Ansichten mit wachsender Unterstreichung</p>
+  </div>
+  <div class="stage">
+    <div class="h1">ODIS Berlin Prognoseräume Supertrumpf</div>
+    <a class="v3-primary" href="#">
+      <span class="marker"></span>
+      Gegen den Computer spielen<span class="arrow">→</span>
+    </a>
+    <div class="v3-links">
+      <a href="#">Galerie-Ansicht</a>
+      <a href="#">Solitaire-Ansicht</a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -129,8 +129,7 @@ export default function Play() {
                 <button
                   type="button"
                   onClick={() => startGame(allCards)}
-                  className="border-2 px-8 py-3 font-bold"
-                  style={{ backgroundColor: yellow, borderColor: blue, color: blue }}
+                  className="btn-stamp btn-stamp-primary"
                 >
                   Nochmal spielen
                 </button>
@@ -199,8 +198,7 @@ export default function Play() {
                     <button
                       type="button"
                       onClick={nextRound}
-                      className="border-2 px-8 py-3 font-bold"
-                      style={{ backgroundColor: yellow, borderColor: blue, color: blue }}
+                      className="btn-stamp btn-stamp-primary"
                     >
                       {playerDeck.length <= 1 || aiDeck.length <= 1
                         ? 'Ergebnis anzeigen'

@@ -13,6 +13,40 @@
   }
 }
 
+/* Stamp buttons: the Bezirk badge's language — hard edges, offset
+   shadow, presses down onto the shadow on hover/click */
+.btn-stamp {
+  display: inline-block;
+  border: 2px solid #002f6c;
+  color: #002f6c;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.btn-stamp-primary {
+  background: #f4e85a;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 13px 34px;
+  box-shadow: 5px 5px 0 #002f6c;
+}
+.btn-stamp-primary:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 #002f6c; }
+.btn-stamp-primary:active { transform: translate(5px, 5px); box-shadow: 0 0 0 #002f6c; }
+
+.btn-stamp-secondary {
+  background: white;
+  font-size: 13px;
+  padding: 8px 20px;
+  box-shadow: 4px 4px 0 #f4e85a;
+}
+.btn-stamp-secondary:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #f4e85a; }
+.btn-stamp-secondary:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #f4e85a; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-stamp { transition: none; }
+}
+
 /* Card turn: the card rotates edge-on, content swaps, then it turns back */
 .card-turn {
   transition: transform 200ms ease-out;

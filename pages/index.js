@@ -53,22 +53,17 @@ export default function Home() {
           ODIS Berlin Prognoseräume Supertrumpf
         </h1>
         
-        <div className="text-center mb-4">
-          <Link
-            href="/play"
-            className="inline-block border-2 px-8 py-3 font-bold"
-            style={{ backgroundColor: '#F4E85A', borderColor: '#002F6C', color: '#002F6C' }}
-          >
+        <div className="text-center mb-5">
+          <Link href="/play" className="btn-stamp btn-stamp-primary">
             Gegen den Computer spielen
           </Link>
         </div>
 
-        <div className="text-center mb-6 space-x-4">
-          <Link href="/gallery" className="text-blue-700 hover:text-blue-800 underline">
+        <div className="mb-8 flex justify-center gap-4">
+          <Link href="/gallery" className="btn-stamp btn-stamp-secondary">
             Galerie-Ansicht
           </Link>
-          <span className="text-gray-400">|</span>
-          <Link href="/solitaire" className="text-blue-700 hover:text-blue-800 underline">
+          <Link href="/solitaire" className="btn-stamp btn-stamp-secondary">
             Solitaire-Ansicht
           </Link>
         </div>
