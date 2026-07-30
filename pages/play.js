@@ -101,13 +101,10 @@ export default function Play() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
       <div className="container mx-auto px-4 py-6">
-        <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <header className="mb-5 text-center">
           <h1 className="text-2xl font-extrabold tracking-tight text-white">
             Open Data Supertrumpf
           </h1>
-          <Link href="/" className="text-sm text-blue-100 underline hover:text-white">
-            Zur Kartenübersicht
-          </Link>
         </header>
 
         {phase === 'loading' && (
@@ -116,8 +113,6 @@ export default function Play() {
 
         {phase !== 'loading' && (
           <>
-            <DeckBar playerCount={playerDeck.length} aiCount={aiDeck.length} />
-
             {phase === 'over' ? (
               <div className="py-16 text-center">
                 <p className="mb-2 text-lg text-blue-100">Runde {round}</p>
@@ -136,20 +131,6 @@ export default function Play() {
               </div>
             ) : (
               <>
-                <p className="mb-4 text-center text-sm text-blue-100" aria-live="polite">
-                  {phase === 'pick' && turn === 'player' &&
-                    'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
-                  {phase === 'pick' && turn === 'ai' &&
-                    'Runde ' + round + ' – der Computer wählt eine Kategorie …'}
-                  {phase === 'reveal' && selectedCat && (
-                    roundWinner === 'tie'
-                      ? `${selectedCat.label}: Unentschieden – beide behalten ihre Karte.`
-                      : roundWinner === 'player'
-                        ? `${selectedCat.label}: Du gewinnst die Runde und übernimmst die Karte!`
-                        : `${selectedCat.label}: Der Computer gewinnt die Runde.`
-                  )}
-                </p>
-
                 <div className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start">
                   <div className="text-center">
                     <p className="mb-2 text-sm font-bold text-white">Deine Karte</p>
@@ -193,8 +174,22 @@ export default function Play() {
                   </div>
                 </div>
 
+                <p className="mt-6 text-center text-sm text-blue-100" aria-live="polite">
+                  {phase === 'pick' && turn === 'player' &&
+                    'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
+                  {phase === 'pick' && turn === 'ai' &&
+                    'Runde ' + round + ' – der Computer wählt eine Kategorie …'}
+                  {phase === 'reveal' && selectedCat && (
+                    roundWinner === 'tie'
+                      ? `${selectedCat.label}: Unentschieden – beide behalten ihre Karte.`
+                      : roundWinner === 'player'
+                        ? `${selectedCat.label}: Du gewinnst die Runde und übernimmst die Karte!`
+                        : `${selectedCat.label}: Der Computer gewinnt die Runde.`
+                  )}
+                </p>
+
                 {phase === 'reveal' && (
-                  <div className="mt-6 text-center">
+                  <div className="mt-4 text-center">
                     <button
                       type="button"
                       onClick={nextRound}
@@ -207,12 +202,22 @@ export default function Play() {
                   </div>
                 )}
 
-                <p className="mt-8 text-center text-xs text-blue-200">
+                <div className="mt-6">
+                  <DeckBar playerCount={playerDeck.length} aiCount={aiDeck.length} />
+                </div>
+
+                <p className="mt-6 text-center text-xs text-blue-200">
                   Bei Luftqualität (NO₂), Versiegelung und Rettungsdienst-Anfahrt gewinnt
                   der niedrigere Wert.
                 </p>
               </>
             )}
+
+            <div className="mt-4 text-center">
+              <Link href="/" className="text-sm text-blue-100 underline hover:text-white">
+                Zur Kartenübersicht
+              </Link>
+            </div>
           </>
         )}
       </div>
