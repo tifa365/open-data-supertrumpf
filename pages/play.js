@@ -123,7 +123,7 @@ export default function Play() {
                   style={{ zoom: 1.22, perspective: '900px' }}
                 >
                   <div className="text-center">
-                    <p className="mb-2 text-sm font-bold text-white">Deine Karte</p>
+                    <p className="mb-6 text-sm font-bold text-white">Deine Karte</p>
                     <ResultFx side="player" phase={phase} roundWinner={roundWinner} isFinalRound={isFinalRound}>
                       <SupertrumpfCard
                         data={playerCard}
@@ -142,7 +142,7 @@ export default function Play() {
                   </div>
 
                   <div className="text-center">
-                    <p className="mb-2 text-sm font-bold text-white">Computer</p>
+                    <p className="mb-6 text-sm font-bold text-white">Computer</p>
                     {phase === 'reveal' ? (
                       <ResultFx side="ai" phase={phase} roundWinner={roundWinner} isFinalRound={isFinalRound}>
                         <SupertrumpfCard
