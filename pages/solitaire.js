@@ -24,13 +24,18 @@ export default function Solitaire() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#2E3EA1' }}>
-      <header className="px-6 pt-5">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">
-          Open Data Supertrumpf
-        </h1>
-        <p className="text-sm text-blue-100">
-          Solitaire – {cardData.length} Karten, klicken für Details
-        </p>
+      <header className="flex flex-wrap items-start justify-between gap-3 px-6 pt-5">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white">
+            Open Data Supertrumpf
+          </h1>
+          <p className="text-sm text-blue-100">
+            Solitaire – {cardData.length} Karten, klicken für Details
+          </p>
+        </div>
+        <Link href="/" className="btn-stamp btn-stamp-secondary">
+          ← Zur Startseite
+        </Link>
       </header>
 
       <div className="container mx-auto px-4 pb-10 pt-6">
@@ -47,11 +52,6 @@ export default function Solitaire() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
-          <Link href="/" className="text-sm text-blue-100 underline hover:text-white">
-            Zur Kartenübersicht
-          </Link>
-        </div>
       </div>
 
       {/* Detail view: the canonical card */}

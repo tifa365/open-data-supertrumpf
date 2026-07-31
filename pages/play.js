@@ -85,10 +85,13 @@ export default function Play() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
-      <header className="px-6 pt-5">
+      <header className="flex flex-wrap items-start justify-between gap-3 px-6 pt-5">
         <h1 className="text-3xl font-extrabold tracking-tight text-white">
           Open Data Supertrumpf
         </h1>
+        <Link href="/" className="btn-stamp btn-stamp-secondary">
+          ← Zur Startseite
+        </Link>
       </header>
       <div className="container mx-auto px-4 pb-6 pt-2">
 
@@ -211,11 +214,6 @@ export default function Play() {
               </>
             )}
 
-            <div className="mt-4 text-center">
-              <Link href="/" className="text-sm text-blue-100 underline hover:text-white">
-                Zur Kartenübersicht
-              </Link>
-            </div>
           </>
         )}
       </div>
