@@ -207,11 +207,6 @@ function GalleryCard({ district }) {
           </div>
         </div>
         
-        {/* "präsentiert von ODIS" text at bottom */}
-        <div className="absolute bottom-8 left-0 right-0 text-center text-xs tracking-wide" 
-             style={{ color: color, opacity: 0.7 }}>
-          präsentiert von ODIS
-        </div>
       </div>
       
       {/* Main white card */}

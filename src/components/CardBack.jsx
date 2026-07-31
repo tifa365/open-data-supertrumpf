@@ -56,9 +56,6 @@ export default function CardBack() {
           </div>
         </div>
       </div>
-      <div className="mt-2 text-xs tracking-wide" style={{ color: "#002F6C", opacity: 0.75 }}>
-        präsentiert von ODIS
-      </div>
     </div>
   );
 }
