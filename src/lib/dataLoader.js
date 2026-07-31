@@ -1,7 +1,10 @@
+// Site base path ("" locally, "/open-data-supertrumpf" on GitHub Pages)
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 // Load and parse CSV data for the cards
 export async function loadCardData() {
   try {
-    const response = await fetch('/data/supertrumpf.csv');
+    const response = await fetch(`${BASE_PATH}/data/supertrumpf.csv`);
     const text = await response.text();
     
     // Parse CSV
@@ -27,11 +30,11 @@ export async function loadCardData() {
 // Convert area name to SVG filename format (Berlin locator map)
 export function getMapPath(ortsteil) {
   const filename = ortsteil.replace(/[ /]/g, "_");
-  return `/maps/${filename}.svg`;
+  return `${BASE_PATH}/maps/${filename}.svg`;
 }
 
 // Card artwork: the district on its street map (original print design)
 export function getArtworkPath(ortsteil) {
   const filename = ortsteil.replace(/[ /]/g, "_");
-  return `/maps/art/${filename}.webp`;
+  return `${BASE_PATH}/maps/art/${filename}.webp`;
 }

@@ -1,45 +1,8 @@
 @config "../../tailwind.config.js";
 @import "tailwindcss";
 
-/* Barlow (SIL OFL) — free stand-in for FF Clan, the ODIS brand
-   typeface: same low-contrast, slightly squared grotesque feel.
-   Self-hosted from public/fonts. */
-@font-face {
-  font-family: "Barlow";
-  src: url("/fonts/barlow-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url("/fonts/barlow-400-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url("/fonts/barlow-700.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url("/fonts/barlow-700-italic.woff2") format("woff2");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Barlow";
-  src: url("/fonts/barlow-800.woff2") format("woff2");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* Barlow (the app typeface, a free FF Clan stand-in) is loaded via
+   next/font/local in pages/_app.js */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -47,7 +10,6 @@
   }
 
   body {
-    font-family: "Barlow", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: hsl(var(--background));
     color: hsl(var(--foreground));
   }
