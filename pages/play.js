@@ -8,16 +8,14 @@ import { CATEGORIES, compareCards } from '@/lib/categories';
 const blue = "#002F6C";
 const yellow = "#F4E85A";
 
-// Classic Top Trumps against the computer: the deck is split in half,
-// the active side picks a category, the better value wins both cards,
-// and the winner picks next. Lower wins for NO₂, Versiegelung and
-// Rettungsdienst-Anfahrt.
+// Top Trumps against the computer: the deck is split in half, the
+// player picks the category every round, the better value wins both
+// cards. Lower wins for NO₂, Versiegelung and Rettungsdienst-Anfahrt.
 export default function Play() {
   const [allCards, setAllCards] = useState([]);
   const [playerDeck, setPlayerDeck] = useState([]);
   const [aiDeck, setAiDeck] = useState([]);
   const [phase, setPhase] = useState('loading'); // loading | pick | reveal | over
-  const [turn, setTurn] = useState('player');
   const [selectedKey, setSelectedKey] = useState(null);
   const [roundWinner, setRoundWinner] = useState(null);
   const [round, setRound] = useState(1);
@@ -27,7 +25,6 @@ export default function Play() {
     const half = Math.ceil(shuffled.length / 2);
     setPlayerDeck(shuffled.slice(0, half));
     setAiDeck(shuffled.slice(half));
-    setTurn('player');
     setSelectedKey(null);
     setRoundWinner(null);
     setRound(1);
@@ -51,28 +48,6 @@ export default function Play() {
     setPhase('reveal');
   }, [playerDeck, aiDeck]);
 
-  // The computer picks the category on which its card beats the most
-  // of the full deck.
-  useEffect(() => {
-    if (phase !== 'pick' || turn !== 'ai' || !aiCard) return;
-    const timer = setTimeout(() => {
-      let bestKey = CATEGORIES[0].key;
-      let bestScore = -1;
-      for (const cat of CATEGORIES) {
-        const v = cat.get(aiCard);
-        const beaten = allCards.filter((d) =>
-          cat.higherWins ? cat.get(d) < v : cat.get(d) > v
-        ).length;
-        if (beaten > bestScore) {
-          bestScore = beaten;
-          bestKey = cat.key;
-        }
-      }
-      playRound(bestKey);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, [phase, turn, aiCard, allCards, playRound]);
-
   const nextRound = () => {
     const p = playerDeck[0];
     const a = aiDeck[0];
@@ -80,10 +55,8 @@ export default function Play() {
     let nextAi = aiDeck.slice(1);
     if (roundWinner === 'player') {
       nextPlayer = [...nextPlayer, p, a];
-      setTurn('player');
     } else if (roundWinner === 'ai') {
       nextAi = [...nextAi, a, p];
-      setTurn('ai');
     } else {
       nextPlayer = [...nextPlayer, p];
       nextAi = [...nextAi, a];
@@ -155,9 +128,7 @@ export default function Play() {
                       <SupertrumpfCard
                         data={playerCard}
                         mapPath={playerCard && getMapPath(playerCard.Ortsteil)}
-                        onSelectCategory={
-                          phase === 'pick' && turn === 'player' ? playRound : undefined
-                        }
+                        onSelectCategory={phase === 'pick' ? playRound : undefined}
                         highlightKey={selectedKey}
                         highlightTone={
                           roundWinner === 'player' ? 'win' : roundWinner === 'ai' ? 'lose' : undefined
@@ -202,10 +173,8 @@ export default function Play() {
                 </div>
 
                 <p className="mt-6 text-center text-sm text-blue-100" aria-live="polite">
-                  {phase === 'pick' && turn === 'player' &&
+                  {phase === 'pick' &&
                     'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
-                  {phase === 'pick' && turn === 'ai' &&
-                    'Runde ' + round + ' – der Computer wählt eine Kategorie …'}
                   {phase === 'reveal' && selectedCat && (
                     roundWinner === 'tie'
                       ? `${selectedCat.label}: Unentschieden – beide behalten ihre Karte.`
