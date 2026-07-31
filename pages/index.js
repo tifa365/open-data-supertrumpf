@@ -83,20 +83,14 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={handlePrevious}
-                className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
-              >
+            <div className="flex items-center justify-center gap-4">
+              <button onClick={handlePrevious} className="btn-stamp btn-stamp-secondary">
                 ← Vorherige
               </button>
-              <span className="px-4 py-2 text-gray-700">
+              <span className="px-2 py-2 font-bold" style={{ color: '#002F6C' }}>
                 {currentIndex + 1} / {cardData.length}
               </span>
-              <button
-                onClick={handleNext}
-                className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
-              >
+              <button onClick={handleNext} className="btn-stamp btn-stamp-secondary">
                 Nächste →
               </button>
             </div>
