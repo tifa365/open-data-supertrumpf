@@ -4,7 +4,15 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-## ODIS Card Game: Open Data Top Trumps
+## Open Data Supertrumpf – Web Edition
+
+> **Weiterentwicklung**: This is a playable web version of the
+> [Open Data Supertrumpf](https://github.com/technologiestiftung/odis-cardgame)
+> card game by [ODIS Berlin](https://odis-berlin.de/) / Technologiestiftung Berlin —
+> not the official repository. All card data, map artwork, and the original
+> analyses come from the ODIS team's open-data work.
+>
+> **▶ Play it here: https://tifa365.github.io/open-data-supertrumpf/**
 
 The **Open Data Supertrumpf** card game transforms the diverse data of our capital Berlin into an exciting competition! In this game, it's not about horsepower or classic vehicle attributes, but rather about the unique characteristics of Berlin's districts and admin areas.
 
