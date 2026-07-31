@@ -35,6 +35,7 @@ export default function SupertrumpfCard({ data, mapPath, onSelectCategory, highl
         <img
           src={getArtworkPath(data.Ortsteil)}
           alt={`Karte von ${data.Ortsteil}`}
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute left-4 top-3">
