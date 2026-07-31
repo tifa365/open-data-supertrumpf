@@ -120,11 +120,7 @@ export default function Play() {
             ) : (
               <>
                 <div
-                  className={`flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start ${
-                    phase === 'reveal' && roundWinner && roundWinner !== 'tie' && !isFinalRound
-                      ? 'fx-quake'
-                      : ''
-                  }`}
+                  className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start"
                   style={{ zoom: 1.22, perspective: '900px' }}
                 >
                   <div className="text-center">
@@ -221,38 +217,27 @@ export default function Play() {
   );
 }
 
-// Wraps a card with the round-result effect: arena slam (lift, slam,
-// shockwave, the loser knocked aside) every round; pack-reveal spin
-// (two full turns toward the camera with a yellow burst, card back on
-// the flip side) for the final card that decides the game.
+// Wraps a card with the round-result flourish: the winner flips once
+// in place (card back visible mid-turn) and gets a light sweep; the
+// loser dims. The game-deciding round flips slower with a soft glow.
 function ResultFx({ side, phase, roundWinner, isFinalRound, children }) {
   if (phase !== 'reveal' || !roundWinner || roundWinner === 'tie') {
     return <div className="relative">{children}</div>;
   }
-  const won = roundWinner === side;
-  if (isFinalRound) {
-    return won ? (
-      <div className="fx-pack-win relative">
-        <div style={{ backfaceVisibility: 'hidden' }}>{children}</div>
-        <div
-          className="absolute inset-0"
-          style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
-        >
-          <CardBack />
-        </div>
-        <span className="fx-burst" />
-      </div>
-    ) : (
-      <div className="fx-pack-lose relative">{children}</div>
-    );
+  if (roundWinner !== side) {
+    return <div className="fx-lose relative">{children}</div>;
   }
-  return won ? (
-    <div className="fx-slam-win relative">
-      {children}
-      <span className="fx-ring" />
+  return (
+    <div className={`relative ${isFinalRound ? 'fx-win fx-win-final' : 'fx-win'}`}>
+      <div style={{ backfaceVisibility: 'hidden' }}>{children}</div>
+      <div
+        className="absolute inset-0"
+        style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
+      >
+        <CardBack />
+      </div>
+      <span className="fx-shine" />
     </div>
-  ) : (
-    <div className="fx-slam-lose relative">{children}</div>
   );
 }
 
