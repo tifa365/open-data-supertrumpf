@@ -98,6 +98,16 @@ export default function Play() {
 
   const selectedCat = selectedKey && CATEGORIES.find((c) => c.key === selectedKey);
 
+  // The round that decides the game: the loser is about to hand over
+  // their last card
+  const isFinalRound =
+    phase === 'reveal' &&
+    (roundWinner === 'player'
+      ? aiDeck.length === 1
+      : roundWinner === 'ai'
+        ? playerDeck.length === 1
+        : false);
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
       <header className="px-6 pt-5">
@@ -132,22 +142,28 @@ export default function Play() {
             ) : (
               <>
                 <div
-                  className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start"
-                  style={{ zoom: 1.22 }}
+                  className={`flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start ${
+                    phase === 'reveal' && roundWinner && roundWinner !== 'tie' && !isFinalRound
+                      ? 'fx-quake'
+                      : ''
+                  }`}
+                  style={{ zoom: 1.22, perspective: '900px' }}
                 >
                   <div className="text-center">
                     <p className="mb-2 text-sm font-bold text-white">Deine Karte</p>
-                    <SupertrumpfCard
-                      data={playerCard}
-                      mapPath={playerCard && getMapPath(playerCard.Ortsteil)}
-                      onSelectCategory={
-                        phase === 'pick' && turn === 'player' ? playRound : undefined
-                      }
-                      highlightKey={selectedKey}
-                      highlightTone={
-                        roundWinner === 'player' ? 'win' : roundWinner === 'ai' ? 'lose' : undefined
-                      }
-                    />
+                    <ResultFx side="player" phase={phase} roundWinner={roundWinner} isFinalRound={isFinalRound}>
+                      <SupertrumpfCard
+                        data={playerCard}
+                        mapPath={playerCard && getMapPath(playerCard.Ortsteil)}
+                        onSelectCategory={
+                          phase === 'pick' && turn === 'player' ? playRound : undefined
+                        }
+                        highlightKey={selectedKey}
+                        highlightTone={
+                          roundWinner === 'player' ? 'win' : roundWinner === 'ai' ? 'lose' : undefined
+                        }
+                      />
+                    </ResultFx>
                   </div>
 
                   <div className="hidden self-center text-3xl font-extrabold text-white lg:block">
@@ -157,14 +173,16 @@ export default function Play() {
                   <div className="text-center">
                     <p className="mb-2 text-sm font-bold text-white">Computer</p>
                     {phase === 'reveal' ? (
-                      <SupertrumpfCard
-                        data={aiCard}
-                        mapPath={aiCard && getMapPath(aiCard.Ortsteil)}
-                        highlightKey={selectedKey}
-                        highlightTone={
-                          roundWinner === 'ai' ? 'win' : roundWinner === 'player' ? 'lose' : undefined
-                        }
-                      />
+                      <ResultFx side="ai" phase={phase} roundWinner={roundWinner} isFinalRound={isFinalRound}>
+                        <SupertrumpfCard
+                          data={aiCard}
+                          mapPath={aiCard && getMapPath(aiCard.Ortsteil)}
+                          highlightKey={selectedKey}
+                          highlightTone={
+                            roundWinner === 'ai' ? 'win' : roundWinner === 'player' ? 'lose' : undefined
+                          }
+                        />
+                      </ResultFx>
                     ) : (
                       /* Invisible copy of the player's card sizes the back
                          to exactly match the face-up card */
@@ -230,6 +248,49 @@ export default function Play() {
           </>
         )}
       </div>
+    </div>
+  );
+}
+
+// Wraps a card with the round-result effect: arena slam (lift, slam,
+// shockwave, the loser knocked aside) every round; pack-reveal spin
+// (two full turns toward the camera with a yellow burst, card back on
+// the flip side) for the final card that decides the game.
+function ResultFx({ side, phase, roundWinner, isFinalRound, children }) {
+  if (phase !== 'reveal' || !roundWinner || roundWinner === 'tie') {
+    return <div className="relative">{children}</div>;
+  }
+  const won = roundWinner === side;
+  if (isFinalRound) {
+    return won ? (
+      <div className="fx-pack-win relative">
+        <div style={{ backfaceVisibility: 'hidden' }}>{children}</div>
+        <div
+          className="absolute inset-0"
+          style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' }}
+        >
+          <CardBack />
+        </div>
+        <span className="fx-burst" />
+      </div>
+    ) : (
+      <div className="fx-pack-lose relative">{children}</div>
+    );
+  }
+  return won ? (
+    <div className="fx-slam-win relative">
+      {children}
+      <span className="fx-ring" />
+    </div>
+  ) : (
+    <div
+      className="fx-slam-lose relative"
+      style={{
+        '--away': side === 'player' ? '-44px' : '44px',
+        '--tilt': side === 'player' ? '-10deg' : '10deg',
+      }}
+    >
+      {children}
     </div>
   );
 }
