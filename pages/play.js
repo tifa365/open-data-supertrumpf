@@ -173,6 +173,27 @@ export default function Play() {
                   </div>
                 </div>
 
+                {phase === 'reveal' && roundWinner && (
+                  <div key={round} className="result-callout" aria-hidden="true">
+                    <span
+                      style={{
+                        color:
+                          roundWinner === 'player'
+                            ? '#B9E7AF'
+                            : roundWinner === 'ai'
+                              ? '#F5B8B8'
+                              : '#F4E85A',
+                      }}
+                    >
+                      {roundWinner === 'player'
+                        ? 'Gewonnen!'
+                        : roundWinner === 'ai'
+                          ? 'Verloren'
+                          : 'Unentschieden'}
+                    </span>
+                  </div>
+                )}
+
                 <p className="mt-14 text-center text-sm text-blue-100" aria-live="polite">
                   {phase === 'pick' &&
                     'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
