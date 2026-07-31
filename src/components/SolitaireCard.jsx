@@ -1,11 +1,9 @@
 import React from 'react';
-import { MapPin } from "lucide-react";
-import useMapSvg from '@/hooks/useMapSvg';
+import { getArtworkPath } from '@/lib/dataLoader';
 
-export default function SolitaireCard({ data, mapPath }) {
+export default function SolitaireCard({ data }) {
   const blue = "#002F6C";
   const yellow = "#F4E85A";
-  const svgContent = useMapSvg(mapPath, { fill: blue, strokeWidth: '0.5' });
 
   if (!data) {
     return <div>Loading...</div>;
@@ -71,29 +69,18 @@ export default function SolitaireCard({ data, mapPath }) {
         </div>
       </div>
 
-      {/* Map */}
-      <div style={{ 
+      {/* District artwork */}
+      <div style={{
         height: '60px',
         backgroundColor: '#f9fafb',
-        padding: '4px',
-        borderBottom: `1px solid ${blue}`
+        borderBottom: `1px solid ${blue}`,
+        overflow: 'hidden'
       }}>
-        {svgContent ? (
-          <div 
-            dangerouslySetInnerHTML={{ __html: svgContent }}
-            style={{ width: '100%', height: '100%' }}
-          />
-        ) : (
-          <div style={{ 
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <MapPin size={20} color="#9ca3af" />
-          </div>
-        )}
+        <img
+          src={getArtworkPath(data.Ortsteil)}
+          alt={`Karte von ${data.Ortsteil}`}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
       </div>
 
       {/* District name */}
