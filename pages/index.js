@@ -55,7 +55,7 @@ export default function Home() {
         
         <div className="text-center mb-5">
           <Link href="/play" className="btn-stamp btn-stamp-primary">
-            Gegen den Computer spielen
+            Jetzt gegen den Computer spielen
           </Link>
         </div>
 
