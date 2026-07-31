@@ -8,9 +8,12 @@ import { CATEGORIES, compareCards } from '@/lib/categories';
 const blue = "#002F6C";
 const yellow = "#F4E85A";
 
-// Top Trumps against the computer: the deck is split in half, the
-// player picks the category every round, the better value wins both
-// cards. Lower wins for NO₂, Versiegelung and Rettungsdienst-Anfahrt.
+// Top Trumps against the computer: each run deals 9 random cards per
+// side from the 58, the player picks the category every round, the
+// better value wins both cards. Lower wins for NO₂, Versiegelung and
+// Rettungsdienst-Anfahrt.
+const HAND_SIZE = 9;
+
 export default function Play() {
   const [allCards, setAllCards] = useState([]);
   const [playerDeck, setPlayerDeck] = useState([]);
@@ -22,9 +25,8 @@ export default function Play() {
 
   const startGame = useCallback((cards) => {
     const shuffled = [...cards].sort(() => Math.random() - 0.5);
-    const half = Math.ceil(shuffled.length / 2);
-    setPlayerDeck(shuffled.slice(0, half));
-    setAiDeck(shuffled.slice(half));
+    setPlayerDeck(shuffled.slice(0, HAND_SIZE));
+    setAiDeck(shuffled.slice(HAND_SIZE, HAND_SIZE * 2));
     setSelectedKey(null);
     setRoundWinner(null);
     setRound(1);
@@ -102,7 +104,7 @@ export default function Play() {
                 <h2 className="mb-6 text-4xl font-extrabold text-white">
                   {playerDeck.length === 0
                     ? 'Der Computer hat alle Karten gewonnen.'
-                    : 'Du hast alle 58 Karten gewonnen!'}
+                    : 'Du hast alle Karten gewonnen!'}
                 </h2>
                 <button
                   type="button"
