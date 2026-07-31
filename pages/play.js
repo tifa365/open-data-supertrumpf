@@ -283,15 +283,7 @@ function ResultFx({ side, phase, roundWinner, isFinalRound, children }) {
       <span className="fx-ring" />
     </div>
   ) : (
-    <div
-      className="fx-slam-lose relative"
-      style={{
-        '--away': side === 'player' ? '-44px' : '44px',
-        '--tilt': side === 'player' ? '-10deg' : '10deg',
-      }}
-    >
-      {children}
-    </div>
+    <div className="fx-slam-lose relative">{children}</div>
   );
 }
 
