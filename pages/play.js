@@ -84,7 +84,7 @@ export default function Play() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
       <header className="px-6 pt-5">
-        <h1 className="text-xl font-extrabold tracking-tight text-white">
+        <h1 className="text-3xl font-extrabold tracking-tight text-white">
           Open Data Supertrumpf
         </h1>
       </header>
@@ -172,7 +172,7 @@ export default function Play() {
                   </div>
                 </div>
 
-                <p className="mt-6 text-center text-sm text-blue-100" aria-live="polite">
+                <p className="mt-14 text-center text-sm text-blue-100" aria-live="polite">
                   {phase === 'pick' &&
                     'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
                   {phase === 'reveal' && selectedCat && (
