@@ -28,12 +28,9 @@ The repository contains both the app and the offline data pipeline:
   - `gallery.js`: gallery/carousel presentation
   - `solitaire.js`: table-style layout with detail modal
 - `src/components/`
-  - `SupertrumpfCard.jsx`: main full-size card, modeled on the printed design; accepts optional `onSelectCategory`/`highlightKey` for the game
+  - `SupertrumpfCard.jsx`: the canonical card, modeled on the printed design; used by home, gallery, solitaire detail, and the game; accepts optional `onSelectCategory`/`highlightKey`/`highlightTone` for the game
   - `CardBack.jsx`: card back for the game (hidden opponent card)
-  - `CompactSupertrumpfCard.jsx`: compact detail card
-  - `SolitaireCard.jsx`, `MiniSupertrumpfCard.jsx`, `TinyCard.jsx`: smaller variants
-- `src/hooks/useMapSvg.js`
-  - shared hook that fetches, normalizes, and recolors the map SVGs for the smaller card variants
+  - `SolitaireCard.jsx`: small grid card for the solitaire table
 - `src/lib/categories.js`
   - the 8 card categories: accessors, German formatting, and win direction (lower wins for NO₂, Versiegelung, Rettungsdienst-Anfahrt)
 - `src/lib/dataLoader.js`
@@ -42,7 +39,7 @@ The repository contains both the app and the offline data pipeline:
 - `src/styles/globals.css`: global styling
 - `public/`
   - `data/supertrumpf.csv`: runtime card dataset
-  - `maps/*.svg`: Berlin locator maps (district highlighted inside the Berlin outline); use as plain `<img>`, recoloring them flattens the highlight
+  - `maps/*.svg`: Berlin locator maps (district highlighted inside the Berlin outline); always use as plain `<img>` — recoloring the paths flattens the highlight
   - `maps/art/*.webp`: card artwork (district on its street map), downscaled from `cardgame/maps/png/`
 - `docs/generated/`
   - generated or ad hoc setup notes kept out of the main repo root
