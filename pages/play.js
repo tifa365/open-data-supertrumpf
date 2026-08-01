@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import SupertrumpfCard from '@/components/SupertrumpfCard';
 import CardBack from '@/components/CardBack';
-import { loadCardData, getMapPath } from '@/lib/dataLoader';
+import { loadCardData, getMapPath, getArtworkPath } from '@/lib/dataLoader';
 import { CATEGORIES, compareCards } from '@/lib/categories';
 
 const blue = "#002F6C";
@@ -83,10 +83,26 @@ export default function Play() {
         ? playerDeck.length === 1
         : false);
 
+  // The player's card with its result flourish, shared by the mobile
+  // and desktop branches below
+  const playerCardFx = playerCard && (
+    <ResultFx side="player" phase={phase} roundWinner={roundWinner} isFinalRound={isFinalRound}>
+      <SupertrumpfCard
+        data={playerCard}
+        mapPath={getMapPath(playerCard.Ortsteil)}
+        onSelectCategory={phase === 'pick' ? playRound : undefined}
+        highlightKey={selectedKey}
+        highlightTone={
+          roundWinner === 'player' ? 'win' : roundWinner === 'ai' ? 'lose' : undefined
+        }
+      />
+    </ResultFx>
+  );
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
       <header className="flex flex-wrap items-start justify-between gap-3 px-6 pt-5">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">
+        <h1 className="text-2xl font-extrabold tracking-tight text-white lg:text-3xl">
           Open Data Supertrumpf
         </h1>
         <Link href="/" className="btn-stamp btn-stamp-secondary">
@@ -119,26 +135,34 @@ export default function Play() {
               </div>
             ) : (
               <>
+                {/* Mobile („Kompakter Gegner“): der Computer belegt nur
+                    eine schmale Zeile am oberen Rand — erst verdeckt,
+                    nach der Wahl mit Artwork, Name und dem Wert der
+                    gespielten Kategorie. Karte, Ergebnis und Button
+                    passen so ohne Scrollen auf einen Screen. */}
+                <div className="lg:hidden" style={{ perspective: '900px' }}>
+                  <OpponentStrip
+                    aiCard={aiCard}
+                    revealed={phase === 'reveal'}
+                    selectedCat={selectedCat}
+                    aiCount={aiDeck.length}
+                    roundWinner={roundWinner}
+                  />
+                  <p className="mb-2 mt-4 text-center text-sm font-bold text-white">Deine Karte</p>
+                  <div className="flex justify-center">{playerCardFx}</div>
+                </div>
+
+                {/* Desktop: beide Karten nebeneinander */}
                 <div
-                  className="flex flex-col items-center justify-center gap-8 lg:flex-row lg:items-start"
+                  className="hidden items-start justify-center gap-8 lg:flex"
                   style={{ zoom: 1.22, perspective: '900px' }}
                 >
                   <div className="text-center">
                     <p className="mb-6 text-sm font-bold text-white">Deine Karte</p>
-                    <ResultFx side="player" phase={phase} roundWinner={roundWinner} isFinalRound={isFinalRound}>
-                      <SupertrumpfCard
-                        data={playerCard}
-                        mapPath={playerCard && getMapPath(playerCard.Ortsteil)}
-                        onSelectCategory={phase === 'pick' ? playRound : undefined}
-                        highlightKey={selectedKey}
-                        highlightTone={
-                          roundWinner === 'player' ? 'win' : roundWinner === 'ai' ? 'lose' : undefined
-                        }
-                      />
-                    </ResultFx>
+                    {playerCardFx}
                   </div>
 
-                  <div className="hidden self-center text-3xl font-extrabold text-white lg:block">
+                  <div className="self-center text-3xl font-extrabold text-white">
                     vs.
                   </div>
 
@@ -194,7 +218,7 @@ export default function Play() {
                   </div>
                 )}
 
-                <p className="mt-14 text-center text-sm text-blue-100" aria-live="polite">
+                <p className="mt-6 text-center text-sm text-blue-100 lg:mt-14" aria-live="polite">
                   {phase === 'pick' &&
                     'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
                   {phase === 'reveal' && selectedCat && (
@@ -258,6 +282,81 @@ function ResultFx({ side, phase, roundWinner, isFinalRound, children }) {
         <CardBack />
       </div>
       <span className="fx-shine" />
+    </div>
+  );
+}
+
+// Mobile only: the computer's card as a slim strip. Face-down while the
+// player picks; after the reveal it shows artwork, name and the played
+// category's value, tinted green/red/yellow with the round outcome.
+function OpponentStrip({ aiCard, revealed, selectedCat, aiCount, roundWinner }) {
+  const tone =
+    roundWinner === 'ai' ? '#B9E7AF' : roundWinner === 'player' ? '#F5B8B8' : yellow;
+  return (
+    <div
+      className="mx-auto flex w-full max-w-[340px] items-center gap-3 rounded-xl bg-white px-3 py-2 shadow-lg"
+      style={{ color: blue }}
+    >
+      {revealed ? (
+        <img
+          src={getArtworkPath(aiCard.Ortsteil)}
+          alt={`Karte von ${aiCard.Ortsteil}`}
+          className="h-11 w-11 shrink-0 rounded-lg object-cover"
+        />
+      ) : (
+        <div
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg"
+          style={{ backgroundColor: '#ACD7EF' }}
+        >
+          {/* Mini card back: tilted map tile with red pin */}
+          <svg width="26" height="26" viewBox="0 0 60 60" aria-hidden="true">
+            <rect
+              x="13" y="20" width="34" height="34" rx="4"
+              fill="white" stroke={blue} strokeWidth="2.5"
+              transform="rotate(-12 30 37)"
+            />
+            <path
+              d="M38 6c-4.4 0-8 3.6-8 8 0 6 8 15 8 15s8-9 8-15c0-4.4-3.6-8-8-8z"
+              fill="#D8232A"
+            />
+            <circle cx="38" cy="14" r="3" fill="white" />
+          </svg>
+        </div>
+      )}
+      <div className="min-w-0">
+        {revealed ? (
+          <>
+            <p className="truncate text-sm font-extrabold leading-tight">
+              {aiCard.Ortsteil}{' '}
+              <span className="text-[11px] font-normal text-gray-500">· {aiCard.Bezirk}</span>
+            </p>
+            {selectedCat && (
+              <span
+                className="mt-0.5 inline-block max-w-full truncate rounded-full px-2 text-[11px] font-bold"
+                style={{ backgroundColor: tone }}
+              >
+                {selectedCat.label}&nbsp;&nbsp;{selectedCat.format(aiCard)}
+              </span>
+            )}
+          </>
+        ) : (
+          <>
+            <p className="text-sm font-extrabold leading-tight">Computer</p>
+            <span className="mt-0.5 inline-block rounded-full bg-gray-100 px-2 text-[11px] text-gray-500">
+              Karte verdeckt — wartet auf deine Wahl
+            </span>
+          </>
+        )}
+      </div>
+      <div className="ml-auto shrink-0 text-right text-[11px] font-bold leading-tight text-gray-500">
+        {revealed && (
+          <>
+            Computer
+            <br />
+          </>
+        )}
+        {aiCount} Karten
+      </div>
     </div>
   );
 }
