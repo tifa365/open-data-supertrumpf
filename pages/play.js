@@ -101,25 +101,17 @@ export default function Play() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
-      {/* Mobile: slim one-line bar (small title + round chip) so the
-          whole round fits the viewport; desktop: full-size title */}
-      <header className="flex flex-wrap items-center justify-between gap-3 px-4 pt-3 lg:items-start lg:px-6 lg:pt-5">
-        <h1 className="text-sm font-extrabold tracking-tight text-white lg:text-3xl">
+      {/* Desktop only — on mobile the game starts right at the top and
+          the title sits at the bottom of the page */}
+      <header className="hidden flex-wrap items-start justify-between gap-3 px-6 pt-5 lg:flex">
+        <h1 className="text-3xl font-extrabold tracking-tight text-white">
           Open Data Supertrumpf
         </h1>
-        {(phase === 'pick' || phase === 'reveal') && (
-          <span className="rounded-full border border-blue-200/60 px-3 py-0.5 text-xs font-bold text-blue-100 lg:hidden">
-            Runde {round}
-          </span>
-        )}
-        {/* On mobile this link moves to the bottom of the page */}
-        <div className="hidden lg:block">
-          <Link href="/" className="btn-stamp btn-stamp-secondary">
-            ← Zur Startseite
-          </Link>
-        </div>
+        <Link href="/" className="btn-stamp btn-stamp-secondary">
+          ← Zur Startseite
+        </Link>
       </header>
-      <div className="container mx-auto px-4 pb-6 pt-2">
+      <div className="container mx-auto px-4 pb-6 pt-3 lg:pt-2">
 
         {phase === 'loading' && (
           <p className="py-20 text-center text-blue-100">Karten werden gemischt …</p>
@@ -269,6 +261,9 @@ export default function Play() {
         )}
 
         <div className="mt-8 text-center lg:hidden">
+          <p className="mb-3 text-sm font-extrabold tracking-tight text-white">
+            Open Data Supertrumpf
+          </p>
           <Link href="/" className="btn-stamp btn-stamp-secondary">
             ← Zur Startseite
           </Link>
