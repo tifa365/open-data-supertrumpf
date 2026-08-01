@@ -10,21 +10,6 @@ const yellow = "#F4E85A";
 // green on the round winner's card, red on the loser's.
 const HIGHLIGHT_COLORS = { win: '#B9E7AF', lose: '#F5B8B8' };
 
-// Marks the categories where the LOWER value wins the trick (cleaner
-// air, less sealing, faster ambulance). Also used by the play page's
-// coach box and legend.
-export function LowerWinsChip() {
-  return (
-    <span
-      className="inline-block rounded-full px-[5px] text-[10px] font-bold leading-4"
-      style={{ backgroundColor: '#FBEFC5', color: '#7A4A00' }}
-      title="Der niedrigere Wert gewinnt"
-    >
-      ↓
-    </span>
-  );
-}
-
 // Canonical card, modeled on the printed Supertrumpf design:
 // street-map artwork on top, Bezirk badge with yellow drop, Ortsteil
 // title between rules, Fläche/Einwohner next to the Berlin locator,
@@ -156,15 +141,7 @@ function StatRow({ cat, data, interactive, highlighted, highlightColor, onSelect
   const style = { borderColor: blue, backgroundColor: highlighted ? highlightColor : undefined };
   const content = (
     <>
-      <span className="font-normal">
-        {cat.label}
-        {cat.higherWins === false && (
-          <>
-            {' '}
-            <LowerWinsChip />
-          </>
-        )}
-      </span>
+      <span className="font-normal">{cat.label}</span>
       <span className="font-bold">{cat.format(data)}</span>
     </>
   );

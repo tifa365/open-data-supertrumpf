@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSwipeNav from '@/lib/useSwipeNav';
-import SupertrumpfCard, { LowerWinsChip } from '@/components/SupertrumpfCard';
+import SupertrumpfCard from '@/components/SupertrumpfCard';
 import CardBack from '@/components/CardBack';
 import { loadCardData, getMapPath, getArtworkPath } from '@/lib/dataLoader';
 import { CATEGORIES, compareCards } from '@/lib/categories';
@@ -168,9 +168,10 @@ export default function Play() {
                   >
                     <p className="m-0 leading-snug">
                       <b>So geht’s:</b> Wähle die Kategorie, in der deine Karte stark ist —
-                      der bessere Wert gewinnt beide Karten. Bei Kategorien mit{' '}
-                      <LowerWinsChip /> gewinnt der <b>niedrigere</b> Wert: weniger NO₂,
-                      weniger Versiegelung, schnellere Rettung.
+                      der bessere Wert gewinnt beide Karten. Achtung: Bei{' '}
+                      <b>Luftqualität (NO₂)</b>, <b>Versiegelung</b> und{' '}
+                      <b>Rettungsdienst-Anfahrt</b> gewinnt der <b>niedrigere</b> Wert —
+                      weniger ist hier besser.
                     </p>
                     <button
                       type="button"
@@ -297,8 +298,9 @@ export default function Play() {
                   <DeckBar playerCount={playerDeck.length} aiCount={aiDeck.length} />
                 </div>
 
-                <p className="mt-6 flex items-center justify-center gap-1.5 text-center text-xs text-blue-200">
-                  <LowerWinsChip /> = der niedrigere Wert gewinnt
+                <p className="mt-6 text-center text-xs text-blue-200">
+                  Bei Luftqualität (NO₂), Versiegelung und Rettungsdienst-Anfahrt gewinnt
+                  der niedrigere Wert.
                 </p>
               </>
             )}
