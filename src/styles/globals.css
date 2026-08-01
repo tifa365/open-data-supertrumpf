@@ -15,6 +15,13 @@
   }
 }
 
+/* Disable the browser's pull-to-refresh so the start page's
+   pull-down-to-play gesture (useSwipeNav) isn't hijacked by it */
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+
 /* Stamp buttons: the Bezirk badge's language — hard edges, offset
    shadow, presses down onto the shadow on hover/click */
 .btn-stamp {

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import useSwipeNav from '@/lib/useSwipeNav';
 import SupertrumpfCard from '@/components/SupertrumpfCard';
 import { loadCardData, getMapPath } from '@/lib/dataLoader';
 
@@ -10,8 +12,12 @@ const CARD_GAP = 24;
 // prev/next slides the track one card, arrow keys work, clicking a
 // neighbor jumps to it.
 export default function Gallery() {
+  const router = useRouter();
   const [cardData, setCardData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Swipe left anywhere to return to the start page
+  useSwipeNav({ onLeft: () => router.push('/') });
 
   useEffect(() => {
     loadCardData().then(setCardData);

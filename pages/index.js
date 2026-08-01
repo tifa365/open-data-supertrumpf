@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import SupertrumpfCard from '@/components/SupertrumpfCard';
 import { loadCardData, getMapPath, getArtworkPath } from '@/lib/dataLoader';
+import useSwipeNav from '@/lib/useSwipeNav';
 
 const TURN_MS = 200;
 
 export default function Home() {
+  const router = useRouter();
   const [cardData, setCardData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [turning, setTurning] = useState(null); // null | 'next' | 'prev'
+
+  // Swipe shortcuts, mirrored by the arrows on the buttons: pull down
+  // (from the top of the page) to play, left to the gallery, right to
+  // solitaire
+  useSwipeNav({
+    onLeft: () => router.push('/gallery'),
+    onRight: () => router.push('/solitaire'),
+    onPullDown: () => router.push('/play'),
+  });
 
   useEffect(() => {
     loadCardData().then(data => {
@@ -55,16 +67,16 @@ export default function Home() {
         
         <div className="text-center mb-5">
           <Link href="/play" className="btn-stamp btn-stamp-primary">
-            Jetzt gegen den Computer spielen
+            Jetzt gegen den Computer spielen<span className="lg:hidden"> ↓</span>
           </Link>
         </div>
 
         <div className="mb-8 flex justify-center gap-4">
           <Link href="/gallery" className="btn-stamp btn-stamp-secondary">
-            Galerie-Ansicht
+            <span className="lg:hidden">← </span>Galerie-Ansicht
           </Link>
           <Link href="/solitaire" className="btn-stamp btn-stamp-secondary">
-            Solitaire-Ansicht
+            Solitaire-Ansicht<span className="lg:hidden"> →</span>
           </Link>
         </div>
         

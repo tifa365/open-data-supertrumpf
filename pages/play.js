@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import useSwipeNav from '@/lib/useSwipeNav';
 import SupertrumpfCard from '@/components/SupertrumpfCard';
 import CardBack from '@/components/CardBack';
 import { loadCardData, getMapPath, getArtworkPath } from '@/lib/dataLoader';
@@ -15,6 +17,7 @@ const yellow = "#F4E85A";
 const HAND_SIZE = 9;
 
 export default function Play() {
+  const router = useRouter();
   const [allCards, setAllCards] = useState([]);
   const [playerDeck, setPlayerDeck] = useState([]);
   const [aiDeck, setAiDeck] = useState([]);
@@ -39,6 +42,9 @@ export default function Play() {
       if (cards.length > 0) startGame(cards);
     });
   }, [startGame]);
+
+  // Swipe left anywhere to return to the start page
+  useSwipeNav({ onLeft: () => router.push('/') });
 
   const playerCard = playerDeck[0];
   const aiCard = aiDeck[0];

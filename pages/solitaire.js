@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import useSwipeNav from '@/lib/useSwipeNav';
 import SolitaireCard from '@/components/SolitaireCard';
 import SupertrumpfCard from '@/components/SupertrumpfCard';
 import { loadCardData, getMapPath } from '@/lib/dataLoader';
@@ -7,8 +9,12 @@ import { loadCardData, getMapPath } from '@/lib/dataLoader';
 // Solitaire: all 58 cards laid out on the table; clicking one opens
 // the canonical card as a detail view.
 export default function Solitaire() {
+  const router = useRouter();
   const [cardData, setCardData] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
+
+  // Swipe left anywhere to return to the start page
+  useSwipeNav({ onLeft: () => router.push('/') });
 
   useEffect(() => {
     loadCardData().then(setCardData);
