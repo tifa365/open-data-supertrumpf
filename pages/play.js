@@ -171,8 +171,7 @@ export default function Play() {
                       der bessere Wert gewinnt beide Karten, deine Karte und die Karte des
                       Computers. Das Spiel endet, wenn du alle Karten gewonnen hast.
                       Achtung: Bei <b>Luftqualität (NO₂)</b>, <b>Versiegelung</b> und{' '}
-                      <b>Rettungsdienst-Anfahrt</b> gewinnt der <b>niedrigere</b> Wert —
-                      weniger ist hier besser.
+                      <b>Rettungsdienst-Anfahrt</b> gewinnt der <b>niedrigere</b> Wert.
                     </p>
                     <button
                       type="button"
