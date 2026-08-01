@@ -27,15 +27,13 @@ export default function Gallery() {
     [count]
   );
 
-  // Horizontal swipes browse the track like the arrow keys; swiping
-  // right on the first card — where no previous card exists — leaves
-  // to the start page
+  // Horizontal swipes browse the track like the arrow keys; swipe up
+  // to return to the start page (the page doesn't scroll, so the
+  // vertical axis is free)
   useSwipeNav({
     onLeft: next,
-    onRight: () => {
-      if (activeIndex === 0) router.push('/');
-      else prev();
-    },
+    onRight: prev,
+    onPullUp: () => router.push('/'),
   });
 
   useEffect(() => {

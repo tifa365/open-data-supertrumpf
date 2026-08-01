@@ -8,6 +8,9 @@ import { useEffect, useRef } from 'react';
 //     was scrolled to the very top; scrolling through the page can
 //     therefore never fire it. Native pull-to-refresh is disabled via
 //     overscroll-behavior in globals.css so the gesture reaches us.
+//   onPullUp — upward swipe of ≥ 90px that started with the page
+//     already scrolled to the bottom (always true on non-scrolling
+//     pages), the mirror image of onPullDown.
 export default function useSwipeNav(handlers) {
   const handlersRef = useRef(handlers);
   handlersRef.current = handlers;
@@ -20,7 +23,14 @@ export default function useSwipeNav(handlers) {
         return;
       }
       const t = e.touches[0];
-      startRef.current = { x: t.clientX, y: t.clientY, atTop: window.scrollY <= 0 };
+      startRef.current = {
+        x: t.clientX,
+        y: t.clientY,
+        atTop: window.scrollY <= 0,
+        atBottom:
+          window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 1,
+      };
     };
 
     const onTouchEnd = (e) => {
@@ -30,12 +40,14 @@ export default function useSwipeNav(handlers) {
       const t = e.changedTouches[0];
       const dx = t.clientX - start.x;
       const dy = t.clientY - start.y;
-      const { onLeft, onRight, onPullDown } = handlersRef.current ?? {};
+      const { onLeft, onRight, onPullDown, onPullUp } = handlersRef.current ?? {};
       if (Math.abs(dx) >= 60 && Math.abs(dx) > 1.5 * Math.abs(dy)) {
         if (dx < 0) onLeft?.();
         else onRight?.();
       } else if (dy >= 90 && dy > 1.5 * Math.abs(dx) && start.atTop) {
         onPullDown?.();
+      } else if (dy <= -90 && -dy > 1.5 * Math.abs(dx) && start.atBottom) {
+        onPullUp?.();
       }
     };
 

@@ -13,8 +13,8 @@ export default function Solitaire() {
   const [cardData, setCardData] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
-  // Swipe left anywhere to return to the start page
-  useSwipeNav({ onLeft: () => router.push('/') });
+  // Swipe up (from the bottom of the page) to return to the start page
+  useSwipeNav({ onPullUp: () => router.push('/') });
 
   useEffect(() => {
     loadCardData().then(setCardData);

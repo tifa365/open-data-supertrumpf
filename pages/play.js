@@ -43,8 +43,8 @@ export default function Play() {
     });
   }, [startGame]);
 
-  // Swipe left anywhere to return to the start page
-  useSwipeNav({ onLeft: () => router.push('/') });
+  // Swipe up (from the bottom of the page) to return to the start page
+  useSwipeNav({ onPullUp: () => router.push('/') });
 
   const playerCard = playerDeck[0];
   const aiCard = aiDeck[0];
@@ -272,7 +272,7 @@ export default function Play() {
             Open Data Supertrumpf
           </p>
           <Link href="/" className="btn-stamp btn-stamp-secondary">
-            ← Zur Startseite
+            ↑ Zur Startseite
           </Link>
         </div>
       </div>
