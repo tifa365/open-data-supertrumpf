@@ -143,6 +143,7 @@ export default function Play() {
                     gespielten Kategorie. Karte, Ergebnis und Button
                     passen so ohne Scrollen auf einen Screen. */}
                 <div className="lg:hidden" style={{ perspective: '900px' }}>
+                  <p className="mb-2 text-center text-sm font-bold text-white">Computer-Karte</p>
                   <OpponentStrip
                     aiCard={aiCard}
                     revealed={phase === 'reveal'}
@@ -150,7 +151,7 @@ export default function Play() {
                     aiCount={aiDeck.length}
                     roundWinner={roundWinner}
                   />
-                  <p className="mb-1.5 mt-3 text-center text-sm font-bold text-white">Deine Karte</p>
+                  <p className="mb-2 mt-4 text-center text-sm font-bold text-white">Deine Karte</p>
                   <div className="flex justify-center">{playerCardFx}</div>
                 </div>
 
@@ -352,20 +353,14 @@ function OpponentStrip({ aiCard, revealed, selectedCat, aiCount, roundWinner }) 
           </>
         ) : (
           <>
-            <p className="text-sm font-extrabold leading-tight">Computer</p>
+            <p className="text-sm font-extrabold leading-tight">Noch verdeckt</p>
             <span className="mt-0.5 inline-block rounded-full bg-gray-100 px-2 text-[11px] text-gray-500">
-              Karte verdeckt — wartet auf deine Wahl
+              wartet auf deine Wahl
             </span>
           </>
         )}
       </div>
       <div className="ml-auto shrink-0 text-right text-[11px] font-bold leading-tight text-gray-500">
-        {revealed && (
-          <>
-            Computer
-            <br />
-          </>
-        )}
         {aiCount} Karten
       </div>
     </div>
