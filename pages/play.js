@@ -105,9 +105,12 @@ export default function Play() {
         <h1 className="text-2xl font-extrabold tracking-tight text-white lg:text-3xl">
           Open Data Supertrumpf
         </h1>
-        <Link href="/" className="btn-stamp btn-stamp-secondary">
-          ← Zur Startseite
-        </Link>
+        {/* On mobile this link moves to the bottom of the page */}
+        <div className="hidden lg:block">
+          <Link href="/" className="btn-stamp btn-stamp-secondary">
+            ← Zur Startseite
+          </Link>
+        </div>
       </header>
       <div className="container mx-auto px-4 pb-6 pt-2">
 
@@ -257,6 +260,12 @@ export default function Play() {
 
           </>
         )}
+
+        <div className="mt-8 text-center lg:hidden">
+          <Link href="/" className="btn-stamp btn-stamp-secondary">
+            ← Zur Startseite
+          </Link>
+        </div>
       </div>
     </div>
   );
