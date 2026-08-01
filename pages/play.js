@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSwipeNav from '@/lib/useSwipeNav';
-import SupertrumpfCard from '@/components/SupertrumpfCard';
+import SupertrumpfCard, { LowerWinsChip } from '@/components/SupertrumpfCard';
 import CardBack from '@/components/CardBack';
 import { loadCardData, getMapPath, getArtworkPath } from '@/lib/dataLoader';
 import { CATEGORIES, compareCards } from '@/lib/categories';
@@ -16,9 +16,13 @@ const yellow = "#F4E85A";
 // Rettungsdienst-Anfahrt.
 const HAND_SIZE = 9;
 
+// localStorage key: the "So geht's" coach box was dismissed
+const COACH_KEY = 'supertrumpf-anleitung-gesehen';
+
 export default function Play() {
   const router = useRouter();
   const [allCards, setAllCards] = useState([]);
+  const [showCoach, setShowCoach] = useState(false);
   const [playerDeck, setPlayerDeck] = useState([]);
   const [aiDeck, setAiDeck] = useState([]);
   const [phase, setPhase] = useState('loading'); // loading | pick | reveal | over
@@ -42,6 +46,15 @@ export default function Play() {
       if (cards.length > 0) startGame(cards);
     });
   }, [startGame]);
+
+  useEffect(() => {
+    setShowCoach(window.localStorage.getItem(COACH_KEY) !== '1');
+  }, []);
+
+  const dismissCoach = () => {
+    setShowCoach(false);
+    window.localStorage.setItem(COACH_KEY, '1');
+  };
 
   // Swipe up (from the bottom of the page) to return to the start page
   useSwipeNav({ onPullUp: () => router.push('/') });
@@ -143,6 +156,33 @@ export default function Play() {
               </div>
             ) : (
               <>
+                {showCoach && (
+                  <div
+                    className="mx-auto mb-4 flex max-w-md items-start gap-3 border-2 px-4 py-3 text-sm"
+                    style={{
+                      backgroundColor: yellow,
+                      borderColor: blue,
+                      color: blue,
+                      boxShadow: `4px 4px 0 ${blue}`,
+                    }}
+                  >
+                    <p className="m-0 leading-snug">
+                      <b>So geht’s:</b> Wähle die Kategorie, in der deine Karte stark ist —
+                      der bessere Wert gewinnt beide Karten. Bei Kategorien mit{' '}
+                      <LowerWinsChip /> gewinnt der <b>niedrigere</b> Wert: weniger NO₂,
+                      weniger Versiegelung, schnellere Rettung.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={dismissCoach}
+                      aria-label="Anleitung schließen"
+                      className="shrink-0 cursor-pointer text-lg font-bold leading-none"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+
                 {/* Mobile („Kompakter Gegner“): der Computer belegt nur
                     eine schmale Zeile am oberen Rand — erst verdeckt,
                     nach der Wahl mit Artwork, Name und dem Wert der
@@ -257,9 +297,8 @@ export default function Play() {
                   <DeckBar playerCount={playerDeck.length} aiCount={aiDeck.length} />
                 </div>
 
-                <p className="mt-6 text-center text-xs text-blue-200">
-                  Bei Luftqualität (NO₂), Versiegelung und Rettungsdienst-Anfahrt gewinnt
-                  der niedrigere Wert.
+                <p className="mt-6 flex items-center justify-center gap-1.5 text-center text-xs text-blue-200">
+                  <LowerWinsChip /> = der niedrigere Wert gewinnt
                 </p>
               </>
             )}
