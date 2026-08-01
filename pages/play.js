@@ -101,10 +101,17 @@ export default function Play() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#2E3EA1" }}>
-      <header className="flex flex-wrap items-start justify-between gap-3 px-6 pt-5">
-        <h1 className="text-2xl font-extrabold tracking-tight text-white lg:text-3xl">
+      {/* Mobile: slim one-line bar (small title + round chip) so the
+          whole round fits the viewport; desktop: full-size title */}
+      <header className="flex flex-wrap items-center justify-between gap-3 px-4 pt-3 lg:items-start lg:px-6 lg:pt-5">
+        <h1 className="text-sm font-extrabold tracking-tight text-white lg:text-3xl">
           Open Data Supertrumpf
         </h1>
+        {(phase === 'pick' || phase === 'reveal') && (
+          <span className="rounded-full border border-blue-200/60 px-3 py-0.5 text-xs font-bold text-blue-100 lg:hidden">
+            Runde {round}
+          </span>
+        )}
         {/* On mobile this link moves to the bottom of the page */}
         <div className="hidden lg:block">
           <Link href="/" className="btn-stamp btn-stamp-secondary">
@@ -151,7 +158,7 @@ export default function Play() {
                     aiCount={aiDeck.length}
                     roundWinner={roundWinner}
                   />
-                  <p className="mb-2 mt-4 text-center text-sm font-bold text-white">Deine Karte</p>
+                  <p className="mb-1.5 mt-3 text-center text-sm font-bold text-white">Deine Karte</p>
                   <div className="flex justify-center">{playerCardFx}</div>
                 </div>
 
@@ -221,7 +228,7 @@ export default function Play() {
                   </div>
                 )}
 
-                <p className="mt-6 text-center text-sm text-blue-100 lg:mt-14" aria-live="polite">
+                <p className="mt-3 text-center text-sm text-blue-100 lg:mt-14" aria-live="polite">
                   {phase === 'pick' &&
                     'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
                   {phase === 'reveal' && selectedCat && (
@@ -234,7 +241,7 @@ export default function Play() {
                 </p>
 
                 {phase === 'reveal' && (
-                  <div className="mt-4 text-center">
+                  <div className="mt-3 text-center lg:mt-4">
                     <button
                       type="button"
                       onClick={nextRound}
@@ -247,7 +254,7 @@ export default function Play() {
                   </div>
                 )}
 
-                <div className="mt-6">
+                <div className="mt-4 lg:mt-6">
                   <DeckBar playerCount={playerDeck.length} aiCount={aiDeck.length} />
                 </div>
 
