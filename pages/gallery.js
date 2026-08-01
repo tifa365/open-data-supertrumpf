@@ -16,9 +16,6 @@ export default function Gallery() {
   const [cardData, setCardData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Swipe left anywhere to return to the start page
-  useSwipeNav({ onLeft: () => router.push('/') });
-
   useEffect(() => {
     loadCardData().then(setCardData);
   }, []);
@@ -29,6 +26,17 @@ export default function Gallery() {
     () => setActiveIndex((i) => Math.min(count - 1, i + 1)),
     [count]
   );
+
+  // Horizontal swipes browse the track like the arrow keys; swiping
+  // right on the first card — where no previous card exists — leaves
+  // to the start page
+  useSwipeNav({
+    onLeft: next,
+    onRight: () => {
+      if (activeIndex === 0) router.push('/');
+      else prev();
+    },
+  });
 
   useEffect(() => {
     if (count === 0) return;
