@@ -33,6 +33,14 @@
   padding: 13px 34px;
   box-shadow: 5px 5px 0 #002f6c;
 }
+
+/* Mobile: tighter primary button so the action row stays compact */
+@media (max-width: 1023px) {
+  .btn-stamp-primary {
+    font-size: 15px;
+    padding: 8px 22px;
+  }
+}
 .btn-stamp-primary:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 #002f6c; }
 .btn-stamp-primary:active { transform: translate(5px, 5px); box-shadow: 0 0 0 #002f6c; }
 
