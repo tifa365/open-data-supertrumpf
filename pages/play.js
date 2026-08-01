@@ -168,8 +168,9 @@ export default function Play() {
                   >
                     <p className="m-0 leading-snug">
                       <b>So geht’s:</b> Wähle die Kategorie, in der deine Karte stark ist —
-                      der bessere Wert gewinnt beide Karten. Achtung: Bei{' '}
-                      <b>Luftqualität (NO₂)</b>, <b>Versiegelung</b> und{' '}
+                      der bessere Wert gewinnt beide Karten, deine Karte und die Karte des
+                      Computers. Das Spiel endet, wenn du alle Karten gewonnen hast.
+                      Achtung: Bei <b>Luftqualität (NO₂)</b>, <b>Versiegelung</b> und{' '}
                       <b>Rettungsdienst-Anfahrt</b> gewinnt der <b>niedrigere</b> Wert —
                       weniger ist hier besser.
                     </p>
