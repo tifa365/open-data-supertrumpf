@@ -268,7 +268,14 @@ export default function Play() {
                   </div>
                 )}
 
-                <p className="mt-3 text-center text-sm text-blue-100 lg:mt-14" aria-live="polite">
+                {/* On mobile the reveal outcome is already told by the
+                    call-out and row colors — text only while picking */}
+                <p
+                  className={`mt-3 text-center text-sm text-blue-100 lg:mt-14 ${
+                    phase === 'reveal' ? 'hidden lg:block' : ''
+                  }`}
+                  aria-live="polite"
+                >
                   {phase === 'pick' &&
                     'Runde ' + round + ' – wähle eine Kategorie auf deiner Karte.'}
                   {phase === 'reveal' && selectedCat && (
